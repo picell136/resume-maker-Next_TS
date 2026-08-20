@@ -1,5 +1,5 @@
 import type { Resume } from "@/types/resume";
-import { formatPeriod } from "@/lib/resume";
+import { formatDisplayName, formatPeriod } from "@/lib/resume";
 import { EducationBlock, ExperienceBlock, SectionTitle, skillList } from "./shared";
 
 export function MinimalTemplate({ resume }: { resume: Resume }) {
@@ -11,20 +11,22 @@ export function MinimalTemplate({ resume }: { resume: Resume }) {
     personal.website,
     personal.telegram ? `Telegram: ${personal.telegram}` : "",
     personal.max ? `Max: ${personal.max}` : "",
+    personal.linkedin,
+    personal.github,
   ]
     .filter(Boolean)
     .join("  /  ");
 
   return (
-    <div className="h-full bg-white px-12 py-10 text-[13px] text-zinc-800">
+    <div className="h-full bg-white px-12 py-10 text-[1em] text-zinc-800">
       <header className="mb-8">
-        <h1 className="text-[30px] font-light tracking-tight text-zinc-900">
-          {personal.fullName || "Имя Фамилия"}
+        <h1 className="text-[2.3em] font-light tracking-tight text-zinc-900">
+          {formatDisplayName(personal) || "Фамилия Имя Отчество"}
         </h1>
-        <p className="mt-1 text-[13px] uppercase tracking-[0.22em]" style={{ color: accentColor }}>
+        <p className="mt-1 text-[1em] uppercase tracking-[0.22em]" style={{ color: accentColor }}>
           {personal.title || "Специализация"}
         </p>
-        {contacts ? <p className="mt-4 text-[11px] text-zinc-500">{contacts}</p> : null}
+        {contacts ? <p className="mt-4 text-[0.85em] text-zinc-500">{contacts}</p> : null}
       </header>
 
       {resume.summary ? (
@@ -32,7 +34,7 @@ export function MinimalTemplate({ resume }: { resume: Resume }) {
           <SectionTitle color={accentColor} variant="plain">
             Кратко
           </SectionTitle>
-          <p className="max-w-[58ch] text-[13px] leading-relaxed">{resume.summary}</p>
+          <p className="max-w-[58ch] text-[1em] leading-relaxed">{resume.summary}</p>
         </section>
       ) : null}
 
@@ -59,7 +61,7 @@ export function MinimalTemplate({ resume }: { resume: Resume }) {
           <SectionTitle color={accentColor} variant="plain">
             Навыки
           </SectionTitle>
-          <p className="text-[13px] leading-relaxed">{skillList(resume.skills).join("  ·  ")}</p>
+          <p className="text-[1em] leading-relaxed">{skillList(resume.skills).join("  ·  ")}</p>
         </section>
       ) : null}
 
@@ -72,7 +74,7 @@ export function MinimalTemplate({ resume }: { resume: Resume }) {
             {resume.projects.map((item) => (
               <article key={item.id}>
                 <p className="font-medium text-zinc-900">{item.name}</p>
-                {item.description ? <p className="mt-1 text-[12.5px] leading-relaxed">{item.description}</p> : null}
+                {item.description ? <p className="mt-1 text-[0.96em] leading-relaxed">{item.description}</p> : null}
               </article>
             ))}
           </div>

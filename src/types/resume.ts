@@ -1,16 +1,18 @@
 export type TemplateId = "classic" | "modern" | "minimal";
 
 export interface PersonalInfo {
-  fullName: string;
+  lastName: string;
+  firstName: string;
+  patronymic: string;
   title: string;
   email: string;
   phone: string;
   location: string;
   website: string;
-  linkedin: string;
-  github: string;
   telegram: string;
   max: string;
+  linkedin: string;
+  github: string;
 }
 
 export interface ExperienceItem {
@@ -63,6 +65,7 @@ export interface Resume {
   accentColor: string;
   fontFamilyId: string;
   fontStyleId: string;
+  fontSize: number;
   personal: PersonalInfo;
   summary: string;
   experience: ExperienceItem[];

@@ -1,5 +1,5 @@
 import type { Resume } from "@/types/resume";
-import { formatPeriod } from "@/lib/resume";
+import { formatDisplayName, formatPeriod } from "@/lib/resume";
 import { EducationBlock, ExperienceBlock, SectionTitle, skillList } from "./shared";
 
 export function ClassicTemplate({ resume }: { resume: Resume }) {
@@ -9,30 +9,30 @@ export function ClassicTemplate({ resume }: { resume: Resume }) {
     personal.phone,
     personal.location,
     personal.website,
-    personal.linkedin,
-    personal.github,
     personal.telegram ? `Telegram: ${personal.telegram}` : "",
     personal.max ? `Max: ${personal.max}` : "",
+    personal.linkedin,
+    personal.github,
   ].filter(Boolean);
 
   return (
-    <div className="h-full bg-white px-10 py-9 text-[13px] text-zinc-900">
+    <div className="h-full bg-white px-10 py-9 text-[1em] text-zinc-900">
       <header className="mb-6 text-center">
-        <h1 className="text-[28px] font-normal tracking-wide">
-          {personal.fullName || "Имя Фамилия"}
+        <h1 className="text-[2.15em] font-normal tracking-wide">
+          {formatDisplayName(personal) || "Фамилия Имя Отчество"}
         </h1>
-        <p className="mt-1 text-[14px]" style={{ color: accentColor }}>
+        <p className="mt-1 text-[1.08em]" style={{ color: accentColor }}>
           {personal.title || "Специализация"}
         </p>
         {contacts.length > 0 ? (
-          <p className="mt-3 text-[11px] leading-relaxed text-zinc-600">{contacts.join("  ·  ")}</p>
+          <p className="mt-3 text-[0.85em] leading-relaxed text-zinc-600">{contacts.join("  ·  ")}</p>
         ) : null}
       </header>
 
       {resume.summary ? (
         <section className="mb-5">
           <SectionTitle color={accentColor}>О себе</SectionTitle>
-          <p className="text-[12.5px] leading-relaxed">{resume.summary}</p>
+          <p className="text-[0.96em] leading-relaxed">{resume.summary}</p>
         </section>
       ) : null}
 
@@ -53,7 +53,7 @@ export function ClassicTemplate({ resume }: { resume: Resume }) {
       {skillList(resume.skills).length > 0 ? (
         <section className="mb-5">
           <SectionTitle color={accentColor}>Навыки</SectionTitle>
-          <p className="text-[12.5px] leading-relaxed">{skillList(resume.skills).join(" · ")}</p>
+          <p className="text-[0.96em] leading-relaxed">{skillList(resume.skills).join(" · ")}</p>
         </section>
       ) : null}
 
@@ -67,8 +67,8 @@ export function ClassicTemplate({ resume }: { resume: Resume }) {
                   {item.name}
                   {item.link ? <span className="ml-2 font-normal text-zinc-500">{item.link}</span> : null}
                 </p>
-                {item.description ? <p className="mt-1 text-[12px] leading-relaxed">{item.description}</p> : null}
-                {item.technologies ? <p className="mt-1 text-[11px] text-zinc-500">{item.technologies}</p> : null}
+                {item.description ? <p className="mt-1 text-[0.92em] leading-relaxed">{item.description}</p> : null}
+                {item.technologies ? <p className="mt-1 text-[0.85em] text-zinc-500">{item.technologies}</p> : null}
               </article>
             ))}
           </div>
@@ -81,7 +81,7 @@ export function ClassicTemplate({ resume }: { resume: Resume }) {
             <section>
               <SectionTitle color={accentColor}>Языки</SectionTitle>
               {resume.languages.map((item) => (
-                <p key={item.id} className="text-[12.5px]">
+                <p key={item.id} className="text-[0.96em]">
                   {item.name}
                   {item.level ? ` — ${item.level}` : ""}
                 </p>
@@ -92,7 +92,7 @@ export function ClassicTemplate({ resume }: { resume: Resume }) {
             <section>
               <SectionTitle color={accentColor}>Сертификаты</SectionTitle>
               {resume.certificates.map((item) => (
-                <p key={item.id} className="text-[12.5px]">
+                <p key={item.id} className="text-[0.96em]">
                   {item.name}
                   {item.issuer ? `, ${item.issuer}` : ""}
                   {item.date ? ` (${formatPeriod(item.date, "", false)})` : ""}

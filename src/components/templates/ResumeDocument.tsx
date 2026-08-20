@@ -1,5 +1,5 @@
 import type { Resume } from "@/types/resume";
-import { getFontFamily, getFontStyle } from "@/lib/fonts";
+import { clampFontSize, getFontFamily, getFontStyle } from "@/lib/fonts";
 import { ClassicTemplate } from "./ClassicTemplate";
 import { ModernTemplate } from "./ModernTemplate";
 import { MinimalTemplate } from "./MinimalTemplate";
@@ -23,6 +23,7 @@ export function ResumeDocument({ resume }: { resume: Resume }) {
         fontFamily: family.css,
         fontWeight: style.fontWeight,
         fontStyle: style.fontStyle,
+        fontSize: `${clampFontSize(resume.fontSize)}pt`,
       }}
     >
       {document}

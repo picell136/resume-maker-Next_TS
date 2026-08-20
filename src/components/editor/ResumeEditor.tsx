@@ -72,10 +72,22 @@ export function ResumeEditor() {
 
       <SectionCard title="Личные данные">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <Field label="ФИО">
+          <Field label="Фамилия">
             <TextInput
-              value={resume.personal.fullName}
-              onChange={(event) => setPersonal({ fullName: event.target.value })}
+              value={resume.personal.lastName ?? ""}
+              onChange={(event) => setPersonal({ lastName: event.target.value })}
+            />
+          </Field>
+          <Field label="Имя">
+            <TextInput
+              value={resume.personal.firstName ?? ""}
+              onChange={(event) => setPersonal({ firstName: event.target.value })}
+            />
+          </Field>
+          <Field label="Отчество">
+            <TextInput
+              value={resume.personal.patronymic ?? ""}
+              onChange={(event) => setPersonal({ patronymic: event.target.value })}
             />
           </Field>
           <Field label="Должность">
@@ -108,18 +120,6 @@ export function ResumeEditor() {
               onChange={(event) => setPersonal({ website: event.target.value })}
             />
           </Field>
-          <Field label="LinkedIn">
-            <TextInput
-              value={resume.personal.linkedin}
-              onChange={(event) => setPersonal({ linkedin: event.target.value })}
-            />
-          </Field>
-          <Field label="GitHub">
-            <TextInput
-              value={resume.personal.github ?? ""}
-              onChange={(event) => setPersonal({ github: event.target.value })}
-            />
-          </Field>
           <Field label="Telegram">
             <TextInput
               value={resume.personal.telegram ?? ""}
@@ -132,6 +132,18 @@ export function ResumeEditor() {
               value={resume.personal.max ?? ""}
               onChange={(event) => setPersonal({ max: event.target.value })}
               placeholder="max.ru/username"
+            />
+          </Field>
+          <Field label="LinkedIn">
+            <TextInput
+              value={resume.personal.linkedin ?? ""}
+              onChange={(event) => setPersonal({ linkedin: event.target.value })}
+            />
+          </Field>
+          <Field label="GitHub">
+            <TextInput
+              value={resume.personal.github ?? ""}
+              onChange={(event) => setPersonal({ github: event.target.value })}
             />
           </Field>
         </div>

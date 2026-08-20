@@ -1,4 +1,5 @@
-import type { Resume } from "@/types/resume";
+import type { PersonalInfo, Resume } from "@/types/resume";
+import { clampFontSize, FONT_SIZE_DEFAULT, fontSizeFromLegacyScale } from "@/lib/fonts";
 
 export function uid() {
   return crypto.randomUUID();
@@ -13,17 +14,20 @@ export function createEmptyResume(): Resume {
     accentColor: "#2563eb",
     fontFamilyId: "georgia",
     fontStyleId: "regular",
+    fontSize: FONT_SIZE_DEFAULT,
     personal: {
-      fullName: "",
+      lastName: "",
+      firstName: "",
+      patronymic: "",
       title: "",
       email: "",
       phone: "",
       location: "",
       website: "",
-      linkedin: "",
-      github: "",
       telegram: "",
       max: "",
+      linkedin: "",
+      github: "",
     },
     summary: "",
     experience: [],
@@ -44,17 +48,20 @@ export function createSampleResume(): Resume {
     accentColor: "#2563eb",
     fontFamilyId: "georgia",
     fontStyleId: "regular",
+    fontSize: FONT_SIZE_DEFAULT,
     personal: {
-      fullName: "Анна Смирнова",
+      lastName: "Смирнова",
+      firstName: "Анна",
+      patronymic: "Сергеевна",
       title: "Frontend-разработчик",
       email: "anna.smirnova@email.com",
       phone: "+7 (999) 123-45-67",
       location: "Москва",
       website: "annasmirnova.dev",
-      linkedin: "linkedin.com/in/annasmirnova",
-      github: "github.com/annasmirnova",
       telegram: "@annasmirnova",
       max: "max.ru/annasmirnova",
+      linkedin: "linkedin.com/in/annasmirnova",
+      github: "github.com/annasmirnova",
     },
     summary:
       "Frontend-разработчик с 5 годами опыта. Делаю понятные интерфейсы на React и TypeScript, слежу за доступностью и скоростью загрузки. Люблю доводить продукт от макета до продакшена вместе с дизайном и бэкендом.",
@@ -133,14 +140,59 @@ export function formatMonth(value: string) {
   return `${month}.${year}`;
 }
 
+export function formatDisplayName(personal: PersonalInfo) {
+  return [personal.lastName, personal.firstName, personal.patronymic].filter(Boolean).join(" ");
+}
+
+function migratePersonal(personal?: PersonalInfo & { fullName?: string }): PersonalInfo {
+  const defaults = createEmptyResume().personal;
+  const merged = { ...defaults, ...personal };
+  const hasParts = Boolean(merged.lastName || merged.firstName || merged.patronymic);
+  if (!hasParts && personal?.fullName) {
+    const parts = personal.fullName.trim().split(/\s+/).filter(Boolean);
+    if (parts.length >= 3) {
+      merged.lastName = parts[0];
+      merged.firstName = parts[1];
+      merged.patronymic = parts.slice(2).join(" ");
+    } else if (parts.length === 2) {
+      merged.firstName = parts[0];
+      merged.lastName = parts[1];
+    } else if (parts.length === 1) {
+      merged.lastName = parts[0];
+    }
+  }
+  return {
+    lastName: merged.lastName ?? "",
+    firstName: merged.firstName ?? "",
+    patronymic: merged.patronymic ?? "",
+    title: merged.title ?? "",
+    email: merged.email ?? "",
+    phone: merged.phone ?? "",
+    location: merged.location ?? "",
+    website: merged.website ?? "",
+    telegram: merged.telegram ?? "",
+    max: merged.max ?? "",
+    linkedin: merged.linkedin ?? "",
+    github: merged.github ?? "",
+  };
+}
+
 export function normalizeResume(resume: Resume): Resume {
   const defaults = createEmptyResume();
   return {
     ...defaults,
     ...resume,
-    personal: {
-      ...defaults.personal,
-      ...resume.personal,
-    },
+    personal: migratePersonal(resume.personal),
+    fontSize: resolveFontSize(resume),
   };
+}
+
+function resolveFontSize(resume: Resume & { fontScale?: number }) {
+  if (Number.isFinite(resume.fontSize) && resume.fontSize > 0) {
+    return clampFontSize(resume.fontSize);
+  }
+  if (Number.isFinite(resume.fontScale)) {
+    return fontSizeFromLegacyScale(resume.fontScale as number);
+  }
+  return FONT_SIZE_DEFAULT;
 }

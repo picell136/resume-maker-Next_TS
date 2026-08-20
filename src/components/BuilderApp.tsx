@@ -6,7 +6,8 @@ import { ResumeEditor } from "@/components/editor/ResumeEditor";
 import { DraftsPanel } from "@/components/editor/DraftsPanel";
 import { ResumePreview } from "@/components/preview/ResumePreview";
 import { exportElementToPdf } from "@/lib/exportPdf";
-import { FONT_FAMILIES, FONT_STYLES } from "@/lib/fonts";
+import { FONT_FAMILIES, FONT_SIZES, FONT_STYLES, clampFontSize } from "@/lib/fonts";
+import { formatDisplayName } from "@/lib/resume";
 import { useResumeStore } from "@/store/useResumeStore";
 import type { TemplateId } from "@/types/resume";
 
@@ -34,7 +35,7 @@ export function BuilderApp() {
     if (!pageRef.current) return;
     setExporting(true);
     try {
-      const name = resume.personal.fullName || resume.draftName || "resume";
+      const name = formatDisplayName(resume.personal) || resume.draftName || "resume";
       await exportElementToPdf(pageRef.current, name.replace(/\s+/g, "_"));
     } catch (error) {
       console.error(error);
@@ -95,6 +96,20 @@ export function BuilderApp() {
                 {FONT_STYLES.map((style) => (
                   <option key={style.id} value={style.id}>
                     {style.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="flex items-center gap-2 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-700">
+              Размер
+              <select
+                value={clampFontSize(resume.fontSize)}
+                onChange={(event) => patchResume({ fontSize: Number(event.target.value) })}
+                className="bg-transparent text-sm outline-none"
+              >
+                {FONT_SIZES.map((size) => (
+                  <option key={size} value={size}>
+                    {size}
                   </option>
                 ))}
               </select>

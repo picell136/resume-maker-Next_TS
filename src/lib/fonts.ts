@@ -33,3 +33,19 @@ export function getFontFamily(id: string) {
 export function getFontStyle(id: string) {
   return FONT_STYLES.find((item) => item.id === id) ?? FONT_STYLES[0];
 }
+
+export const FONT_SIZES = [10, 11, 12, 13, 14, 15, 16, 17, 18] as const;
+export const FONT_SIZE_DEFAULT = 12;
+
+export function clampFontSize(value: number) {
+  if (!Number.isFinite(value)) return FONT_SIZE_DEFAULT;
+  const rounded = Math.round(value);
+  if (FONT_SIZES.includes(rounded as (typeof FONT_SIZES)[number])) return rounded;
+  return FONT_SIZES.reduce((closest, size) =>
+    Math.abs(size - rounded) < Math.abs(closest - rounded) ? size : closest,
+  );
+}
+
+export function fontSizeFromLegacyScale(fontScale: number) {
+  return clampFontSize((FONT_SIZE_DEFAULT * fontScale) / 100);
+}
