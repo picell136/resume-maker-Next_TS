@@ -16,7 +16,7 @@ export function ClassicTemplate({ resume }: { resume: Resume }) {
   ].filter(Boolean);
 
   return (
-    <div className="h-full bg-white px-10 py-9 text-[13px] text-zinc-900" style={{ fontFamily: "Georgia, serif" }}>
+    <div className="h-full bg-white px-10 py-9 text-[13px] text-zinc-900">
       <header className="mb-6 text-center">
         <h1 className="text-[28px] font-normal tracking-wide">
           {personal.fullName || "Имя Фамилия"}

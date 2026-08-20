@@ -16,7 +16,7 @@ export function MinimalTemplate({ resume }: { resume: Resume }) {
     .join("  /  ");
 
   return (
-    <div className="h-full bg-white px-12 py-10 text-[13px] text-zinc-800" style={{ fontFamily: "Inter, Arial, sans-serif" }}>
+    <div className="h-full bg-white px-12 py-10 text-[13px] text-zinc-800">
       <header className="mb-8">
         <h1 className="text-[30px] font-light tracking-tight text-zinc-900">
           {personal.fullName || "Имя Фамилия"}

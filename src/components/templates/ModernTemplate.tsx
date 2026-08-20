@@ -7,7 +7,7 @@ export function ModernTemplate({ resume }: { resume: Resume }) {
   const skills = skillList(resume.skills);
 
   return (
-    <div className="flex h-full min-h-full bg-white text-[13px] text-zinc-900" style={{ fontFamily: "Inter, Arial, sans-serif" }}>
+    <div className="flex h-full min-h-full bg-white text-[13px] text-zinc-900">
       <aside className="w-[34%] px-6 py-8 text-white" style={{ background: accentColor }}>
         <h1 className="text-[22px] font-bold leading-tight">{personal.fullName || "Имя Фамилия"}</h1>
         <p className="mt-1 text-[13px] opacity-90">{personal.title || "Специализация"}</p>

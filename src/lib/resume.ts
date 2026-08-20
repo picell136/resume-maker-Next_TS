@@ -11,6 +11,8 @@ export function createEmptyResume(): Resume {
     updatedAt: new Date().toISOString(),
     template: "classic",
     accentColor: "#2563eb",
+    fontFamilyId: "georgia",
+    fontStyleId: "regular",
     personal: {
       fullName: "",
       title: "",
@@ -40,6 +42,8 @@ export function createSampleResume(): Resume {
     updatedAt: new Date().toISOString(),
     template: "classic",
     accentColor: "#2563eb",
+    fontFamilyId: "georgia",
+    fontStyleId: "regular",
     personal: {
       fullName: "Анна Смирнова",
       title: "Frontend-разработчик",

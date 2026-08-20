@@ -61,6 +61,8 @@ export interface Resume {
   updatedAt: string;
   template: TemplateId;
   accentColor: string;
+  fontFamilyId: string;
+  fontStyleId: string;
   personal: PersonalInfo;
   summary: string;
   experience: ExperienceItem[];

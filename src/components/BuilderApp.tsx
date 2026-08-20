@@ -6,6 +6,7 @@ import { ResumeEditor } from "@/components/editor/ResumeEditor";
 import { DraftsPanel } from "@/components/editor/DraftsPanel";
 import { ResumePreview } from "@/components/preview/ResumePreview";
 import { exportElementToPdf } from "@/lib/exportPdf";
+import { FONT_FAMILIES, FONT_STYLES } from "@/lib/fonts";
 import { useResumeStore } from "@/store/useResumeStore";
 import type { TemplateId } from "@/types/resume";
 
@@ -19,6 +20,7 @@ export function BuilderApp() {
   const resume = useResumeStore((state) => state.resume);
   const setTemplate = useResumeStore((state) => state.setTemplate);
   const setAccentColor = useResumeStore((state) => state.setAccentColor);
+  const patchResume = useResumeStore((state) => state.patchResume);
   const pageRef = useRef<HTMLDivElement>(null);
   const [exporting, setExporting] = useState(false);
   const [ready, setReady] = useState(false);
@@ -69,6 +71,34 @@ export function BuilderApp() {
                 {template.label}
               </button>
             ))}
+            <label className="flex items-center gap-2 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-700">
+              Шрифт
+              <select
+                value={resume.fontFamilyId}
+                onChange={(event) => patchResume({ fontFamilyId: event.target.value })}
+                className="max-w-[160px] bg-transparent text-sm outline-none"
+              >
+                {FONT_FAMILIES.map((font) => (
+                  <option key={font.id} value={font.id} style={{ fontFamily: font.css }}>
+                    {font.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="flex items-center gap-2 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-700">
+              Начертание
+              <select
+                value={resume.fontStyleId}
+                onChange={(event) => patchResume({ fontStyleId: event.target.value })}
+                className="bg-transparent text-sm outline-none"
+              >
+                {FONT_STYLES.map((style) => (
+                  <option key={style.id} value={style.id}>
+                    {style.label}
+                  </option>
+                ))}
+              </select>
+            </label>
             <label className="flex items-center gap-2 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-700">
               Цвет
               <input
