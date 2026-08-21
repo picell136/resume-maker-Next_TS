@@ -48,8 +48,8 @@ const merriweather = Merriweather({
 });
 
 export const metadata: Metadata = {
-  title: "Resume Maker",
-  description: "Конструктор резюме с шаблонами, превью, PDF и черновиками",
+  title: "Resume Constructor | Сервис по созданию своего резюме",
+  description: "Сервис по созданию своего резюме: секции, шаблоны, превью, PDF и черновики",
 };
 
 export default function RootLayout({

@@ -54,8 +54,8 @@ export function BuilderApp() {
       <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-3 px-4 py-3 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="text-lg font-semibold tracking-tight text-zinc-900">Resume Maker</p>
-            <p className="text-xs text-zinc-500">Секции, превью, шаблоны, PDF и черновики</p>
+            <p className="text-lg font-semibold tracking-tight text-zinc-900">Resume Constructor</p>
+            <p className="text-xs text-zinc-500">Сервис по созданию своего резюме</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {templates.map((template) => (
